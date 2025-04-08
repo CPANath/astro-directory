@@ -1,0 +1,98 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const directoryEntries = await getCollection('directory');
+  
+  return directoryEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { title, description, logo, author, tags, url } = entry.data;
+---
+
+<MainLayout title={title}>
+  <a href="/" class="inline-flex items-center text-gray-600 hover:text-[#5CEBA1] mb-8 group transition-all duration-300 hover:-translate-x-1">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+    </svg>
+    Back to directory
+  </a>
+
+  <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-sm hover:shadow-lg transition-all duration-300">
+    <div class="flex flex-col md:flex-row md:items-start gap-6">
+      <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center relative group/logo">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover/logo:translate-x-[200%] transition-transform duration-1000 ease-out"></div>
+        <img src={logo} alt={title} class="w-full h-full object-cover transition-transform duration-300 group-hover/logo:scale-105" />
+      </div>
+      
+      <div class="flex-1">
+        <h1 class="text-3xl font-bold text-gray-900">{title}</h1>
+        <p class="text-gray-600 mt-2">by {author}</p>
+        
+        <div class="mt-6">
+          <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#5CEBA1]/50"></span>
+            Description
+          </h2>
+          <p class="text-gray-700">{description}</p>
+        </div>
+        
+        <div class="mt-6">
+          <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#5CEBA1]/50"></span>
+            Tags
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            {tags.map(tag => (
+              <a 
+                href={`/category/${tag}`}
+                class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-[#5CEBA1]/10 hover:text-[#5CEBA1] transition-all duration-300 group hover:scale-105 active:scale-95"
+              >
+                <span class="w-1 h-1 rounded-full bg-[#5CEBA1]/0 group-hover:bg-[#5CEBA1]/50 mr-1.5 transition-all duration-300"></span>
+                #{tag}
+              </a>
+            ))}
+          </div>
+        </div>
+        
+        {url && (
+          <div class="mt-8">
+            <a 
+              href={url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="bg-[#5CEBA1] hover:bg-[#4BD28F] text-white py-2 px-6 rounded-md inline-flex items-center transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95 group/btn"
+            >
+              Visit Website
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+  
+  <div class="mt-12">
+    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-[#5CEBA1]/50"></span>
+      Related Listings
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Related items would go here -->
+      <div class="text-center py-12 text-gray-500 col-span-full border border-dashed border-gray-200 rounded-lg group hover:border-[#5CEBA1]/20 transition-all duration-300">
+        <div class="flex flex-col items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 group-hover:text-[#5CEBA1] transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" />
+          </svg>
+          <span class="font-medium group-hover:text-[#5CEBA1] transition-colors duration-300">More listings coming soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

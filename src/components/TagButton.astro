@@ -1,0 +1,12 @@
+---
+interface Props {
+  tag: string;
+  url?: string;
+}
+
+const { tag, url = `/tag/${tag}` } = Astro.props;
+---
+
+<a href={url} class="tag hover:bg-gray-200 transition-colors duration-200">
+  #{tag}
+</a>

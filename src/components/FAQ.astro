@@ -1,0 +1,54 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const faqs: FAQItem[] = [
+  {
+    question: "What is a Directory Listing?",
+    answer: "A directory listing is a curated collection of resources, services, or businesses organized by category. Our directory helps users discover and connect with quality listings in a specific niche."
+  },
+  {
+    question: "How do I add my listing?",
+    answer: "You can add your listing by clicking the 'Submit' button in the top navigation bar. You'll need to create an account, fill out the submission form, and wait for approval from our team."
+  },
+  {
+    question: "Are featured listings better?",
+    answer: "Featured listings receive premium placement in our directory and are highlighted with a star icon. They typically receive more visibility and engagement from our users."
+  },
+  {
+    question: "How are listings verified?",
+    answer: "Our team manually reviews each submission to ensure it meets our quality guidelines. We check for accuracy, relevance, and value to our directory users."
+  },
+  {
+    question: "What are tags used for?",
+    answer: "Tags help categorize and filter directory listings, making it easier for users to find exactly what they're looking for. You can add multiple relevant tags to your listing."
+  }
+];
+---
+
+<section class="mt-16 mb-12 animate-fade-up">
+  <h2 class="text-2xl font-bold mb-8 flex items-center gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#5CEBA1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    FAQ
+  </h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {faqs.map((faq, index) => (
+      <div 
+        class="group bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg p-6 transition-all duration-300
+        hover:shadow-lg hover:-translate-y-1 hover:border-[#5CEBA1]/50 animate-fade-up"
+        style={`animation-delay: ${index * 100}ms`}
+      >
+        <h3 class="font-semibold text-lg mb-3 group-hover:text-[#5CEBA1] transition-colors duration-300 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#5CEBA1]/50 group-hover:scale-150 transition-transform duration-300"></span>
+          {faq.question}
+        </h3>
+        <p class="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">{faq.answer}</p>
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,84 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import DirectoryCard from '../components/DirectoryCard.astro';
+import FiltersSidebar from '../components/FiltersSidebar.astro';
+import { getCollection } from 'astro:content';
+
+const allDirectoryItems = await getCollection('directory');
+---
+
+<MainLayout title="Explore Directory Listings">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold mb-2">
+      Explore <span class="text-[#5CEBA1]">Directory</span> Listings
+    </h1>
+    <p class="text-gray-600">
+      Browse through our extensive collection of directory listings
+    </p>
+  </div>
+
+  <SearchBar />
+
+  <div class="flex flex-col md:flex-row gap-8 mt-8">
+    <div class="md:w-1/4">
+      <FiltersSidebar />
+    </div>
+    
+    <div class="md:w-3/4">
+      <div class="bg-white border border-gray-200 rounded-lg p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-gray-500 text-sm">
+            Showing <span class="font-medium">{allDirectoryItems.length}</span> results
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-sm text-gray-500">Sort by:</span>
+            <select class="text-sm border border-gray-200 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#5CEBA1]">
+              <option>Most Relevant</option>
+              <option>Newest First</option>
+              <option>Highest Rated</option>
+              <option>Name (A-Z)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {allDirectoryItems.map(item => (
+            <DirectoryCard
+              title={item.data.title}
+              description={item.data.description}
+              logo={item.data.logo}
+              author={item.data.author}
+              tags={item.data.tags}
+              slug={item.slug}
+              featured={item.data.featured}
+              official={item.data.official}
+              new={item.data.new}
+              advertisement={item.data.advertisement}
+            />
+          ))}
+        </div>
+        
+        <div class="mt-8 flex justify-center">
+          <nav class="flex items-center">
+            <a href="#" class="h-10 w-10 flex items-center justify-center rounded-md text-gray-500 hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </a>
+            <a href="#" class="h-10 w-10 flex items-center justify-center rounded-md bg-[#5CEBA1] text-white">1</a>
+            <a href="#" class="h-10 w-10 flex items-center justify-center rounded-md text-gray-500 hover:bg-gray-100">2</a>
+            <a href="#" class="h-10 w-10 flex items-center justify-center rounded-md text-gray-500 hover:bg-gray-100">3</a>
+            <span class="h-10 flex items-center justify-center px-2 text-gray-500">...</span>
+            <a href="#" class="h-10 w-10 flex items-center justify-center rounded-md text-gray-500 hover:bg-gray-100">10</a>
+            <a href="#" class="h-10 w-10 flex items-center justify-center rounded-md text-gray-500 hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

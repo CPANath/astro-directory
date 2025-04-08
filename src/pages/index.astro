@@ -1,19 +1,49 @@
 ---
-import Layout from '../layouts/main.astro';
-import { Button } from "@/components/ui/button"
+import MainLayout from '../layouts/MainLayout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import DirectoryList from '../components/DirectoryList.astro';
+import HomepageBanner from '../components/HomepageBanner.astro';
+import FAQ from '../components/FAQ.astro';
 ---
 
-<Layout>
-	<div class="flex items-center justify-center min-h-screen">
-		<Button>Click for Confetti! 🎉</Button>
-	</div>
-</Layout>
+<MainLayout title="Find Awesome Directory Listings">
+  <div class="text-center mb-8">
+    <div class="inline-block bg-[#5CEBA1]/10 px-3 py-1 rounded-full text-[#5CEBA1] font-medium text-sm mb-4">
+      7210 Directory Listings
+    </div>
+    <h1 class="text-4xl font-bold mb-2">
+      Find Awesome <span class="text-[#5CEBA1]">Directory</span> Listings
+    </h1>
+    <p class="text-gray-600 mx-auto max-w-2xl">
+      The largest collection of Directory listings. Discover amazing resources all in one place.
+    </p>
+  </div>
 
-<script>
-	import confetti from 'canvas-confetti';
-	const button = document.querySelector('[data-slot="button"]');
+  <SearchBar />
 
-	if (button) {
-		button.addEventListener('click', () => confetti());
-	}
-</script>
+  <DirectoryList
+    title="Featured"
+    filter={{ featured: true }}
+    viewAllUrl="/featured"
+  />
+
+  <DirectoryList
+    title="Official"
+    filter={{ official: true }}
+    viewAllUrl="/official"
+  />
+
+  <DirectoryList
+    title="New"
+    filter={{ new: true }}
+    viewAllUrl="/new"
+  />
+
+  <DirectoryList
+    title="Popular"
+    filter={{}}
+    viewAllUrl="/popular"
+  />
+
+  <FAQ />
+</MainLayout>

@@ -1,0 +1,188 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { Button } from '../components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/card';
+
+const plans = [
+  {
+    name: "Basic",
+    price: "$9",
+    description: "Perfect for small directories and personal projects",
+    features: [
+      "Up to 100 listings",
+      "Basic analytics",
+      "Standard support",
+      "Community features",
+      "Basic customization",
+      "Monthly updates"
+    ],
+    storage: "10GB",
+    bandwidth: "100GB/month",
+    recommended: false
+  },
+  {
+    name: "Professional",
+    price: "$29",
+    description: "Ideal for growing directories and businesses",
+    features: [
+      "Up to 1,000 listings",
+      "Advanced analytics",
+      "Priority support",
+      "Custom domains",
+      "API access",
+      "Weekly updates"
+    ],
+    storage: "50GB",
+    bandwidth: "500GB/month",
+    recommended: true
+  },
+  {
+    name: "Enterprise",
+    price: "$99",
+    description: "For large-scale directories and organizations",
+    features: [
+      "Unlimited listings",
+      "Custom analytics",
+      "24/7 support",
+      "White labeling",
+      "Custom integrations",
+      "Daily updates"
+    ],
+    storage: "250GB",
+    bandwidth: "2TB/month",
+    recommended: false
+  }
+];
+
+const features = [
+  {
+    title: "High Performance",
+    description: "Built on modern infrastructure for fast loading times",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>`
+  },
+  {
+    title: "Global CDN",
+    description: "Content delivered from edge locations worldwide",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>`
+  },
+  {
+    title: "Automatic Backups",
+    description: "Daily backups with point-in-time recovery",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+    </svg>`
+  },
+  {
+    title: "SSL Certificates",
+    description: "Free SSL certificates for all domains",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    </svg>`
+  }
+];
+---
+
+<MainLayout title="Hosting">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-4">
+        Reliable <span class="text-primary">Hosting</span> Solutions
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+        Fast, secure, and scalable hosting for your directory. Choose the plan that best fits your needs.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      {plans.map((plan) => (
+        <Card className={`transition-all duration-300 hover:scale-105 hover:shadow-xl ${plan.recommended ? "border-primary shadow-lg relative" : ""}`}>
+          {plan.recommended && (
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+              <span class="bg-primary text-primary-foreground text-sm font-medium px-3 py-1 rounded-full animate-pulse">
+                Recommended
+              </span>
+            </div>
+          )}
+          <CardHeader>
+            <CardTitle>{plan.name}</CardTitle>
+            <CardDescription>{plan.description}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="mb-6">
+              <span class="text-4xl font-bold">{plan.price}</span>
+              <span class="text-muted-foreground">/month</span>
+            </div>
+            <ul class="space-y-3 mb-6">
+              {plan.features.map((feature) => (
+                <li class="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-primary mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <div class="grid grid-cols-2 gap-4 text-sm mb-6">
+              <div class="text-center p-3 bg-muted rounded-lg">
+                <div class="font-medium">{plan.storage}</div>
+                <div class="text-muted-foreground">Storage</div>
+              </div>
+              <div class="text-center p-3 bg-muted rounded-lg">
+                <div class="font-medium">{plan.bandwidth}</div>
+                <div class="text-muted-foreground">Bandwidth</div>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button className="w-full" variant={plan.recommended ? "default" : "outline"} client:load>
+              Get Started
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {features.map((feature) => (
+        <Card className="group transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+          <CardHeader>
+            <div class="size-12 rounded-lg bg-primary/10 text-primary p-3 mb-4 transition-all duration-300 hover:bg-primary hover:text-white transform hover:-translate-y-1 hover:scale-110 cursor-pointer" set:html={feature.icon}>
+            </div>
+            <CardTitle className="text-xl transition-colors duration-300 group-hover:text-primary">{feature.title}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-muted-foreground">{feature.description}</p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+
+    <div class="mt-16 text-center">
+      <div class="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+        Enterprise Solutions
+      </div>
+      <h2 class="text-3xl font-bold mb-4">
+        Need a custom solution?
+      </h2>
+      <p class="text-muted-foreground mb-8 max-w-2xl mx-auto">
+        Contact us to discuss custom hosting solutions tailored to your specific needs.
+      </p>
+      <Button size="lg" client:load>
+        Contact Sales
+      </Button>
+    </div>
+  </div>
+</MainLayout>

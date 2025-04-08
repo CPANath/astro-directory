@@ -1,0 +1,167 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { Button } from '../components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card';
+
+const userCases = [
+  {
+    title: "Developer Resources",
+    description: "How developers use our directory to find APIs, tools, and libraries",
+    categories: ["APIs", "SDKs", "Tools"],
+    stats: {
+      users: "12K+",
+      resources: "500+",
+      monthlySearches: "45K+"
+    },
+    features: [
+      "API Documentation",
+      "Code Samples",
+      "Integration Guides",
+      "Version History"
+    ]
+  },
+  {
+    title: "Design Assets",
+    description: "How designers discover and share design resources and tools",
+    categories: ["UI Kits", "Icons", "Templates"],
+    stats: {
+      users: "8K+",
+      resources: "300+",
+      monthlySearches: "30K+"
+    },
+    features: [
+      "Preview Images",
+      "File Downloads",
+      "License Information",
+      "Brand Guidelines"
+    ]
+  },
+  {
+    title: "Business Solutions",
+    description: "How businesses find and compare software solutions",
+    categories: ["SaaS", "Enterprise", "Startups"],
+    stats: {
+      users: "15K+",
+      resources: "400+",
+      monthlySearches: "60K+"
+    },
+    features: [
+      "Price Comparison",
+      "Feature Lists",
+      "User Reviews",
+      "ROI Calculator"
+    ]
+  },
+  {
+    title: "Educational Content",
+    description: "How educators and students access learning resources",
+    categories: ["Courses", "Tutorials", "Books"],
+    stats: {
+      users: "10K+",
+      resources: "250+",
+      monthlySearches: "35K+"
+    },
+    features: [
+      "Course Ratings",
+      "Skill Levels",
+      "Learning Paths",
+      "Progress Tracking"
+    ]
+  }
+];
+---
+
+<MainLayout title="User Cases">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-4">
+        User <span class="text-primary">Cases</span>
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+        Discover how different users leverage our directory platform to find, organize, and share resources.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {userCases.map((useCase) => (
+        <Card>
+          <CardHeader>
+            <CardTitle>{useCase.title}</CardTitle>
+            <CardDescription>{useCase.description}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="flex gap-2 mb-6">
+              {useCase.categories.map((category) => (
+                <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">
+                  {category}
+                </span>
+              ))}
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-6">
+              <div class="text-center">
+                <div class="text-2xl font-bold text-primary">{useCase.stats.users}</div>
+                <div class="text-sm text-muted-foreground">Active Users</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-primary">{useCase.stats.resources}</div>
+                <div class="text-sm text-muted-foreground">Resources</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-primary">{useCase.stats.monthlySearches}</div>
+                <div class="text-sm text-muted-foreground">Monthly Searches</div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <h4 class="font-medium mb-2">Key Features</h4>
+              <div class="grid grid-cols-2 gap-2">
+                {useCase.features.map((feature) => (
+                  <div class="flex items-center text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-primary mr-2"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    {feature}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Button className="w-full mt-6" variant="outline" client:load>
+              Learn More
+            </Button>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <div class="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+        Get Started
+      </div>
+      <h2 class="text-3xl font-bold mb-4">
+        Ready to explore our directory?
+      </h2>
+      <p class="text-muted-foreground mb-8 max-w-2xl mx-auto">
+        Join thousands of users who are already discovering and sharing valuable resources through our platform.
+      </p>
+      <div class="flex gap-4 justify-center">
+        <Button size="lg" client:load>
+          Start Exploring
+        </Button>
+        <Button size="lg" variant="outline" client:load>
+          View Documentation
+        </Button>
+      </div>
+    </div>
+  </div>
+</MainLayout>

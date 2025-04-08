@@ -1,85 +1,116 @@
-# Astro + React + shadcn/ui + Tailwind + TypeScript Template
+# Directory Website Theme (Astro + Tailwind CSS)
 
-A modern, feature-rich starter template combining the power of Astro with React components, shadcn/ui component library, Tailwind CSS styling, and TypeScript type safety.
-
-> **Important**: This is a template repository. Do not push directly to this repository. Instead, use the "Use this template" button on GitHub to create a new repository based on this template. The template button can be found at the top of the repository page:
-
-![Template Button Location](template-dropdown.png)
-
-For more information about template repositories, see the [GitHub documentation](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository).
+A beautiful, modern directory website theme built with Astro and Tailwind CSS. This theme is perfect for creating directory listings, marketplace websites, or any catalog-based web application.
 
 ## Features
 
-- ⚡️ **[Astro](https://astro.build/)** - A modern static site builder with exceptional performance
-- ⚛️ **[React](https://reactjs.org/)** - UI component library integration
-- 🎨 **[shadcn/ui](https://ui.shadcn.com/)** - Beautiful and accessible component library
-- 🎯 **[TypeScript](https://www.typescriptlang.org/)** - Type safety and enhanced developer experience
-- 🎨 **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
-- 📦 **Modern Stack** - Latest versions of all major dependencies
-- 🚀 **Performance Focused** - Optimized for speed and efficiency
-- 📱 **Responsive Design** - Mobile-first approach
-- ✨ **Interactive Examples** - Includes demo components (like confetti effects!)
+- 🚀 Built with Astro for ultra-fast performance
+- 💅 Styled with Tailwind CSS for modern, responsive design
+- 📁 Custom collections to organize directory listings
+- 🏷️ Tag-based categorization system
+- 🔍 Search functionality
+- 🔄 Featured, Official, New, and Advertisement sections
+- 📱 Fully responsive on all devices
+- 🎨 Mint green accent color theme (easily customizable)
 
-## Quick Start
+## Getting Started
 
-1. Click the "Use this template" button above to create a new repository based on this template.
+### Prerequisites
 
-2. Clone your new repository:
+- Node.js (v16 or later)
+- npm or yarn
+
+### Installation
+
+1. Clone this repository:
 ```bash
-git clone https://github.com/automatearmy/astro-react-shad-tailwind-template-repo.git
-cd your-new-repo-name
+git clone https://github.com/yourusername/directory-site.git
+cd directory-site
 ```
 
-3. Install dependencies:
+2. Install dependencies:
 ```bash
 npm install
+# or
+yarn install
 ```
 
-4. Start the development server:
+3. Start the development server:
 ```bash
 npm run dev
+# or
+yarn dev
 ```
 
-Visit `http://localhost:4321` to see your site!
-
-## Available Commands
-
-- `npm run dev` - Start development server
-- `npm run build` - Build your production site
-- `npm run preview` - Preview your build locally
-- `npm run astro` - Run Astro commands
+4. Open your browser and visit `http://localhost:3000` to see the website.
 
 ## Project Structure
 
 ```
-/
-├── public/
-│   └── favicon.svg
+directory-site/
+│
 ├── src/
-│   ├── components/
-│   │   └── ui/
-│   ├── layouts/
-│   ├── lib/
-│   ├── pages/
-│   └── styles/
-├── astro.config.js
-├── tailwind.config.mjs
-└── tsconfig.json
+│   ├── components/     # Reusable UI components
+│   ├── layouts/        # Page layouts
+│   ├── pages/          # Astro pages
+│   ├── styles/         # Global styles
+│   └── content/        # Content collections
+│       └── directory/  # Directory listings
+│
+├── public/             # Static assets
+├── astro.config.mjs    # Astro configuration
+├── tailwind.config.js  # Tailwind CSS configuration
+└── tsconfig.json       # TypeScript configuration
 ```
 
-## Dependencies
+## Content Collections
 
-- Astro v5.5
-- React v19
-- Tailwind CSS v4
-- TypeScript
-- shadcn/ui components
-- Additional utilities like `clsx`, `tailwind-merge`, and `canvas-confetti`
+This theme uses Astro's content collections to manage directory listings. Each listing is defined as a Markdown file in the `src/content/directory/items/` directory with the following frontmatter:
+
+```md
+---
+title: 'Listing Title'
+description: 'Description of the listing'
+logo: '/images/logos/logo.png'
+author: 'Author Name'
+createdAt: 2023-01-15
+tags: ['tag1', 'tag2', 'tag3']
+featured: true|false
+official: true|false
+new: true|false
+advertisement: true|false
+url: 'https://example.com'
+---
+
+# Additional content (optional)
+```
+
+## Customization
+
+### Colors
+
+You can customize the mint green accent color by editing the `tailwind.config.js` file. The main accent color is defined as `mint-400`.
+
+### Adding New Pages
+
+To add new pages, create new `.astro` files in the `src/pages/` directory.
+
+### Modifying Components
+
+All UI components are located in the `src/components/` directory and can be customized as needed.
+
+## Building for Production
+
+When you're ready to build your site for production, run:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+The built files will be in the `dist/` directory, ready to be deployed to your hosting provider.
 
 ## License
 
-MIT License - feel free to use this template for your own projects!
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+This project is licensed under the MIT License - see the LICENSE file for details.

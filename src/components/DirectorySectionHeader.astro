@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  count?: number;
+  viewAllUrl?: string;
+}
+
+const { title, count, viewAllUrl } = Astro.props;
+---
+
+<div class="section-title mb-6 animate-fade-up">
+  <div class="flex items-center space-x-3">
+    <h2 class="text-xl font-semibold group">
+      <span class="relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#5CEBA1] after:transition-all after:duration-300 group-hover:after:w-full">{title}</span>
+      <span class="text-[#5CEBA1] relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#5CEBA1] after:transition-all after:duration-300 group-hover:after:w-full">Directory</span>
+    </h2>
+    {count && (
+      <span class="bg-gray-100 text-gray-600 text-xs font-medium px-2 py-1 rounded-full animate-pulse">
+        {count}
+      </span>
+    )}
+  </div>
+  {viewAllUrl && (
+    <a href={viewAllUrl} class="view-all group/link">
+      <span class="relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#5CEBA1] after:transition-all after:duration-300 group-hover/link:after:w-full">View All</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  )}
+</div>

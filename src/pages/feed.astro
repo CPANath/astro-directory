@@ -1,0 +1,129 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { Button } from '../components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/card';
+
+const feedItems = [
+  {
+    type: 'new_listing',
+    title: 'New Directory Added',
+    description: 'API Directory Hub - A comprehensive collection of public APIs',
+    author: 'Sarah Chen',
+    timestamp: '2 hours ago',
+    tags: ['API', 'Development', 'Resources'],
+    engagement: { likes: 24, comments: 8 }
+  },
+  {
+    type: 'update',
+    title: 'Major Update',
+    description: 'Cloud Services Directory now includes pricing comparisons',
+    author: 'Michael Rodriguez',
+    timestamp: '4 hours ago',
+    tags: ['Cloud', 'Pricing', 'Update'],
+    engagement: { likes: 56, comments: 12 }
+  },
+  {
+    type: 'featured',
+    title: 'Featured Directory',
+    description: 'Design Resources Hub - Curated collection of design tools and assets',
+    author: 'Emily Thompson',
+    timestamp: '6 hours ago',
+    tags: ['Design', 'Resources', 'Tools'],
+    engagement: { likes: 89, comments: 15 }
+  },
+  {
+    type: 'discussion',
+    title: 'Hot Discussion',
+    description: 'What makes a great directory? Share your thoughts!',
+    author: 'Alex Kim',
+    timestamp: '8 hours ago',
+    tags: ['Discussion', 'Community'],
+    engagement: { likes: 134, comments: 47 }
+  }
+];
+---
+
+<MainLayout title="Feed">
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <h1 class="text-3xl font-bold">Activity Feed</h1>
+        <p class="text-muted-foreground mt-2">Stay updated with the latest directory activities</p>
+      </div>
+      <div class="flex gap-2">
+        <Button variant="outline" size="sm" client:load>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
+          </svg>
+          Filter
+        </Button>
+        <Button variant="outline" size="sm" client:load>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
+          </svg>
+          Sort
+        </Button>
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      {feedItems.map((item) => (
+        <Card>
+          <CardHeader>
+            <div class="flex justify-between items-start">
+              <div>
+                <CardTitle>{item.title}</CardTitle>
+                <CardDescription>{item.description}</CardDescription>
+              </div>
+              <Button variant="ghost" size="sm" className="text-muted-foreground" client:load>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                </svg>
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div class="flex gap-2 mb-4">
+              {item.tags.map((tag) => (
+                <span class="bg-muted text-muted-foreground text-xs px-2 py-1 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div class="text-sm text-muted-foreground">
+              Posted by <span class="font-medium text-foreground">{item.author}</span> · {item.timestamp}
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div class="flex gap-4">
+              <Button variant="ghost" size="sm" className="text-muted-foreground" client:load>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                </svg>
+                {item.engagement.likes}
+              </Button>
+              <Button variant="ghost" size="sm" className="text-muted-foreground" client:load>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd" />
+                </svg>
+                {item.engagement.comments}
+              </Button>
+              <Button variant="ghost" size="sm" className="text-muted-foreground ml-auto" client:load>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                </svg>
+                Share
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+
+    <div class="mt-8 text-center">
+      <Button variant="outline" client:load>
+        Load More
+      </Button>
+    </div>
+  </div>
+</MainLayout>

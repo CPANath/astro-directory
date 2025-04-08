@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import DirectoryCard from './DirectoryCard.astro';
+import DirectorySectionHeader from './DirectorySectionHeader.astro';
+
+interface Props {
+  title: string;
+  filter: {
+    featured?: boolean;
+    official?: boolean;
+    new?: boolean;
+    advertisement?: boolean;
+  };
+  limit?: number;
+  viewAllUrl?: string;
+}
+
+const { title, filter, limit = 4, viewAllUrl } = Astro.props;
+
+const allItems = await getCollection('directory');
+const filteredItems = allItems.filter(item => {
+  return Object.entries(filter).every(([key, value]) => {
+    // Type-safe check for known filter keys
+    if (key === 'featured' || key === 'official' || key === 'new' || key === 'advertisement') {
+      return item.data[key] === value;
+    }
+    return true;
+  });
+});
+
+const limitedItems = filteredItems.slice(0, limit);
+---
+
+<section class="mb-12">
+  <DirectorySectionHeader title={title} count={filteredItems.length} viewAllUrl={viewAllUrl} />
+  
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {limitedItems.map(item => (
+      <DirectoryCard
+        title={item.data.title}
+        description={item.data.description}
+        logo={item.data.logo}
+        author={item.data.author}
+        tags={item.data.tags}
+        slug={item.slug}
+        featured={item.data.featured}
+        official={item.data.official}
+        new={item.data.new}
+        advertisement={item.data.advertisement}
+      />
+    ))}
+  </div>
+</section>

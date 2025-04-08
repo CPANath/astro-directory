@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import DirectoryList from '../components/DirectoryList.astro';
+
+const title = "Featured Directory Listings";
+---
+
+<MainLayout title={title}>
+  <div class="text-center mb-8">
+    <div class="inline-block bg-[#5CEBA1]/10 px-3 py-1 rounded-full text-[#5CEBA1] font-medium text-sm mb-4">
+      Featured Listings
+    </div>
+    <h1 class="text-4xl font-bold mb-2">
+      Featured <span class="text-[#5CEBA1]">Directory</span> Listings
+    </h1>
+    <p class="text-gray-600 mx-auto max-w-2xl">
+      Discover our handpicked selection of the best directory listings.
+    </p>
+  </div>
+
+  <SearchBar />
+
+  <DirectoryList
+    title="All Featured Listings"
+    filter={{ featured: true }}
+    limit={100}
+  />
+</MainLayout>

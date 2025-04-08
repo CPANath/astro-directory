@@ -1,0 +1,158 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { Button } from '../components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card';
+---
+
+<MainLayout title="Playground">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-4">
+        Directory <span class="text-primary">Playground</span>
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+        Explore different directory layouts, components, and features. This playground helps you understand how to best organize and display your content.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <Card>
+        <CardHeader>
+          <CardTitle>Grid Layout</CardTitle>
+          <CardDescription>Traditional grid layout with equal-sized cards</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="grid grid-cols-2 gap-4">
+            {Array(4).fill(0).map(() => (
+              <div class="bg-muted aspect-video rounded-md flex items-center justify-center">
+                <span class="text-muted-foreground">Preview</span>
+              </div>
+            ))}
+          </div>
+          <Button className="w-full mt-4" variant="outline" client:load>
+            View Example
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>List Layout</CardTitle>
+          <CardDescription>Vertical list with detailed information</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-4">
+            {Array(3).fill(0).map(() => (
+              <div class="bg-muted p-4 rounded-md flex items-center space-x-4">
+                <div class="w-12 h-12 bg-background rounded-md flex items-center justify-center">
+                  <span class="text-muted-foreground">Icon</span>
+                </div>
+                <div class="flex-1">
+                  <div class="h-4 bg-background rounded w-1/2"></div>
+                  <div class="h-3 bg-background rounded w-3/4 mt-2"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <Button className="w-full mt-4" variant="outline" client:load>
+            View Example
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Masonry Layout</CardTitle>
+          <CardDescription>Pinterest-style layout with varying heights</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="columns-2 gap-4">
+            <div class="bg-muted aspect-[3/4] rounded-md mb-4"></div>
+            <div class="bg-muted aspect-square rounded-md mb-4"></div>
+            <div class="bg-muted aspect-video rounded-md mb-4"></div>
+            <div class="bg-muted aspect-[3/4] rounded-md"></div>
+          </div>
+          <Button className="w-full mt-4" variant="outline" client:load>
+            View Example
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Featured Layout</CardTitle>
+          <CardDescription>Highlight important items with larger cards</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-4">
+            <div class="bg-muted aspect-video rounded-md"></div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-muted aspect-square rounded-md"></div>
+              <div class="bg-muted aspect-square rounded-md"></div>
+            </div>
+          </div>
+          <Button className="w-full mt-4" variant="outline" client:load>
+            View Example
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Filtering</CardTitle>
+          <CardDescription>Filter items by category, tags, or status</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-2">
+            {['All', 'Featured', 'New', 'Popular'].map((filter) => (
+              <div class="flex items-center">
+                <input type="checkbox" class="rounded text-primary focus:ring-primary mr-2" />
+                <span>{filter}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Sorting</CardTitle>
+          <CardDescription>Sort items by different criteria</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-2">
+            {['Most Recent', 'Most Popular', 'Alphabetical', 'Rating'].map((sort) => (
+              <div class="flex items-center">
+                <input type="radio" name="sort" class="text-primary focus:ring-primary mr-2" />
+                <span>{sort}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Search</CardTitle>
+          <CardDescription>Search with different options</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-4">
+            <input
+              type="search"
+              placeholder="Search..."
+              class="w-full px-3 py-2 border rounded-md"
+            />
+            <div class="flex gap-2">
+              <Button size="sm" variant="outline" client:load>Title</Button>
+              <Button size="sm" variant="outline" client:load>Tags</Button>
+              <Button size="sm" variant="outline" client:load>Author</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,156 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { Button } from '../components/ui/button';
+---
+
+<MainLayout title="Submit Your Listing">
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">
+        Submit Your <span class="text-[#5CEBA1]">Directory</span> Listing
+      </h1>
+      <p class="text-gray-600">
+        Add your service or resource to our directory and increase your visibility
+      </p>
+    </div>
+    
+    <div class="bg-white border border-gray-200 rounded-lg p-8 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Listing Title*</label>
+          <input
+            type="text"
+            id="title"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5CEBA1]"
+            placeholder="e.g. Awesome Directory Service"
+            required
+          />
+        </div>
+        
+        <div>
+          <label for="author" class="block text-sm font-medium text-gray-700 mb-1">Author/Publisher*</label>
+          <input
+            type="text"
+            id="author"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5CEBA1]"
+            placeholder="e.g. Your Company Name"
+            required
+          />
+        </div>
+      </div>
+      
+      <div class="mb-6">
+        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description*</label>
+        <textarea
+          id="description"
+          rows="4"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5CEBA1]"
+          placeholder="Describe your listing in detail..."
+          required
+        ></textarea>
+        <p class="mt-1 text-xs text-gray-500">Minimum 50 characters, maximum 500 characters</p>
+      </div>
+      
+      <div class="mb-6">
+        <label for="logo" class="block text-sm font-medium text-gray-700 mb-1">Logo/Image*</label>
+        <div class="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-md p-6">
+          <div class="text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <p class="mt-1 text-sm text-gray-500">Click to upload or drag and drop</p>
+            <p class="mt-1 text-xs text-gray-400">PNG, JPG or SVG (Max 2MB)</p>
+            <input
+              type="file"
+              id="logo"
+              class="hidden"
+              accept="image/*"
+              required
+            />
+            <Button
+              variant="outline"
+              type="button"
+              className="mt-4"
+              client:load
+              onClick={() => {
+                const fileInput = document.getElementById('logo') as HTMLInputElement;
+                if (fileInput) fileInput.click();
+              }}
+            >
+              Select File
+            </Button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mb-6">
+        <label for="tags" class="block text-sm font-medium text-gray-700 mb-1">Tags*</label>
+        <input
+          type="text"
+          id="tags"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5CEBA1]"
+          placeholder="e.g. api, service, directory (comma separated)"
+          required
+        />
+        <p class="mt-1 text-xs text-gray-500">Add up to 5 relevant tags to make your listing easier to find</p>
+      </div>
+      
+      <div class="mb-6">
+        <label for="url" class="block text-sm font-medium text-gray-700 mb-1">Website URL*</label>
+        <input
+          type="url"
+          id="url"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5CEBA1]"
+          placeholder="https://www.example.com"
+          required
+        />
+      </div>
+      
+      <div class="mb-8">
+        <label class="flex items-start">
+          <input type="checkbox" class="mt-1 rounded text-[#5CEBA1] focus:ring-[#5CEBA1]" required />
+          <span class="ml-2 text-sm text-gray-600">
+            I confirm that I have the right to submit this listing and that all information provided is accurate and complies with the <a href="/terms" class="text-[#5CEBA1] hover:underline">terms and conditions</a>.
+          </span>
+        </label>
+      </div>
+      
+      <div class="flex justify-between items-center">
+        <p class="text-sm text-gray-500">* Required fields</p>
+        <Button type="submit">
+          Submit Listing
+        </Button>
+      </div>
+    </div>
+    
+    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+      <h2 class="font-bold text-lg mb-4">Submission Guidelines</h2>
+      <ul class="space-y-3 text-sm text-gray-600">
+        <li class="flex items-start">
+          <svg class="h-5 w-5 text-[#5CEBA1] mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span>Listings must be relevant to the directory's focus and provide value to our users.</span>
+        </li>
+        <li class="flex items-start">
+          <svg class="h-5 w-5 text-[#5CEBA1] mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span>Provide a clear, accurate description that explains what your listing offers.</span>
+        </li>
+        <li class="flex items-start">
+          <svg class="h-5 w-5 text-[#5CEBA1] mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span>All submissions are reviewed by our team before being published (typically within 1-2 business days).</span>
+        </li>
+        <li class="flex items-start">
+          <svg class="h-5 w-5 text-[#5CEBA1] mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span>Consider upgrading to a premium listing for enhanced visibility and features.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</MainLayout>
