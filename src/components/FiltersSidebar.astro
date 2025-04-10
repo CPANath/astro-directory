@@ -16,7 +16,7 @@ allDirectoryItems.forEach(item => {
 const sortedTags = [...tagsMap.entries()].sort((a, b) => b[1] - a[1]);
 ---
 
-<div class="bg-white border border-gray-200 rounded-lg p-6 sticky top-6 animate-fade-up shadow-sm hover:shadow-md transition-shadow duration-300">
+<div id="filters-form" class="bg-white border border-gray-200 rounded-lg p-6 sticky top-6 animate-fade-up shadow-sm hover:shadow-md transition-shadow duration-300">
   <h2 class="font-bold text-lg mb-4 flex items-center gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#5CEBA1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -48,15 +48,15 @@ const sortedTags = [...tagsMap.entries()].sort((a, b) => b[1] - a[1]);
     <h3 class="font-medium text-gray-900 mb-3">Status</h3>
     <div class="space-y-2">
       <label class="flex items-center group cursor-pointer">
-        <input type="checkbox" class="rounded text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
+        <input type="checkbox" name="status" value="featured" class="rounded text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
         <span class="ml-2 text-sm text-gray-600 group-hover:text-[#5CEBA1] transition-colors duration-300">Featured</span>
       </label>
       <label class="flex items-center group cursor-pointer">
-        <input type="checkbox" class="rounded text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
+        <input type="checkbox" name="status" value="official" class="rounded text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
         <span class="ml-2 text-sm text-gray-600 group-hover:text-[#5CEBA1] transition-colors duration-300">Official</span>
       </label>
       <label class="flex items-center group cursor-pointer">
-        <input type="checkbox" class="rounded text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
+        <input type="checkbox" name="status" value="new" class="rounded text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
         <span class="ml-2 text-sm text-gray-600 group-hover:text-[#5CEBA1] transition-colors duration-300">New</span>
       </label>
     </div>
@@ -66,7 +66,7 @@ const sortedTags = [...tagsMap.entries()].sort((a, b) => b[1] - a[1]);
     <h3 class="font-medium text-gray-900 mb-3">Rating</h3>
     <div class="space-y-2">
       <label class="flex items-center group cursor-pointer">
-        <input type="radio" name="rating" class="text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
+        <input type="radio" name="rating" value="5" class="text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
         <span class="ml-2 text-sm text-gray-600 group-hover:text-[#5CEBA1] flex items-center transition-colors duration-300">
           <span class="flex">
             {Array(5).fill(0).map(() => (
@@ -79,7 +79,7 @@ const sortedTags = [...tagsMap.entries()].sort((a, b) => b[1] - a[1]);
         </span>
       </label>
       <label class="flex items-center group cursor-pointer">
-        <input type="radio" name="rating" class="text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
+        <input type="radio" name="rating" value="4" class="text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
         <span class="ml-2 text-sm text-gray-600 group-hover:text-[#5CEBA1] flex items-center transition-colors duration-300">
           <span class="flex">
             {Array(4).fill(0).map(() => (
@@ -95,7 +95,7 @@ const sortedTags = [...tagsMap.entries()].sort((a, b) => b[1] - a[1]);
         </span>
       </label>
       <label class="flex items-center group cursor-pointer">
-        <input type="radio" name="rating" class="text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
+        <input type="radio" name="rating" value="3" class="text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer" />
         <span class="ml-2 text-sm text-gray-600 group-hover:text-[#5CEBA1] flex items-center transition-colors duration-300">
           <span class="flex">
             {Array(3).fill(0).map(() => (
@@ -113,9 +113,96 @@ const sortedTags = [...tagsMap.entries()].sort((a, b) => b[1] - a[1]);
         </span>
       </label>
     </div>
+
+<script>
+  const form = document.getElementById('filters-form') as HTMLFormElement;
+  if (!form) throw new Error('Filters form not found');
+
+  const statusCheckboxes = Array.from(
+    form.querySelectorAll('input[name="status"]')
+  ) as HTMLInputElement[];
+
+  const ratingRadios = Array.from(
+    form.querySelectorAll('input[name="rating"]')
+  ) as HTMLInputElement[];
+
+  // Handle radio button changes
+  ratingRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.set('rating', radio.value);
+      window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+    });
+  });
+
+  // Handle checkbox changes
+  statusCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const selectedStatuses = statusCheckboxes
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+      
+      if (selectedStatuses.length > 0) {
+        searchParams.set('status', selectedStatuses.join(','));
+      } else {
+        searchParams.delete('status');
+      }
+      
+      window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+    });
+  });
+
+  function updateFilters() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const selectedStatuses = statusCheckboxes
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+    
+    const selectedRating = ratingRadios
+      .find(radio => radio.checked)?.value;
+
+    if (selectedStatuses.length > 0) {
+      searchParams.set('status', selectedStatuses.join(','));
+    } else {
+      searchParams.delete('status');
+    }
+
+    if (selectedRating) {
+      searchParams.set('rating', selectedRating);
+    } else {
+      searchParams.delete('rating');
+    }
+
+    window.location.search = searchParams.toString();
+  }
+
+
+  // Set initial values from URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const statusParam = urlParams.get('status');
+  const ratingParam = urlParams.get('rating');
+
+  if (statusParam) {
+    const statuses = statusParam.split(',');
+    statusCheckboxes.forEach(checkbox => {
+      checkbox.checked = statuses.includes(checkbox.value);
+    });
+  }
+
+  if (ratingParam) {
+    const ratingInput = form.querySelector(
+      `input[name="rating"][value="${ratingParam}"]`
+    ) as HTMLInputElement | null;
+    
+    if (ratingInput) {
+      ratingInput.checked = true;
+    }
+  }
+</script>
   </div>
   
-  <Button className="w-full mt-8 transition-all duration-300 hover:shadow-lg active:scale-95">
+  <Button type="button" className="w-full mt-8 transition-all duration-300 hover:shadow-lg active:scale-95">
     Apply Filters
   </Button>
 </div>

@@ -9,4 +9,5 @@ featured: true
 official: true
 advertisement: true
 url: "https://aws.amazon.com"
+rating: 3
 ---

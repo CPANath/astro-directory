@@ -8,4 +8,5 @@ tags: ["javascript", "programming", "development", "microsoft"]
 featured: true
 official: true
 url: "https://www.typescriptlang.org"
+rating: 5
 ---

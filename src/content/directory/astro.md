@@ -9,4 +9,5 @@ featured: true
 official: true
 new: true
 url: "https://astro.build"
+rating: 5
 ---

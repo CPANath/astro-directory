@@ -8,4 +8,5 @@ tags: ["database", "nosql", "cloud", "backend"]
 featured: true
 official: true
 url: "https://www.mongodb.com"
+rating: 4
 ---

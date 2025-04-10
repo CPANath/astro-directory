@@ -9,4 +9,5 @@ featured: true
 official: true
 new: true
 url: "https://vercel.com"
+rating: 4
 ---

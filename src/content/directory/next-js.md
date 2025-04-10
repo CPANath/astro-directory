@@ -8,4 +8,5 @@ tags: ["react", "framework", "frontend", "fullstack"]
 featured: true
 official: true
 url: "https://nextjs.org"
+rating: 3
 ---

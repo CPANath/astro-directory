@@ -8,4 +8,5 @@ tags: ["education", "learning", "courses", "skills"]
 featured: true
 advertisement: true
 url: "https://www.udemy.com"
+rating: 2
 ---

@@ -9,4 +9,5 @@ featured: false
 official: false
 new: true
 url: "https://bun.sh"
+rating: 4
 ---

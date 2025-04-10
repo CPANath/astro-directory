@@ -2,10 +2,70 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import SearchBar from '../components/SearchBar.astro';
 import DirectoryCard from '../components/DirectoryCard.astro';
-import FiltersSidebar from '../components/FiltersSidebar.astro';
-import { getCollection } from 'astro:content';
+import FiltersSidebar from '../components/FiltersSidebar';
+import { getCollection, render } from 'astro:content';
 
 const allDirectoryItems = await getCollection('directory');
+
+// Get all unique tags across all directory items
+const tagsMap = new Map();
+allDirectoryItems.forEach(item => {
+  item.data.tags.forEach(tag => {
+    tagsMap.set(tag, (tagsMap.get(tag) || 0) + 1);
+  });
+});
+
+// Get filter parameters from URL
+const ratingFilter = Astro.url.searchParams.get('rating');
+const statusFilter = Astro.url.searchParams.get('status')?.split(',') || [];
+
+// Apply filters
+let filteredItems = allDirectoryItems;
+
+// Apply status filters
+if (statusFilter.length > 0) {
+  filteredItems = filteredItems.filter(item => {
+    return statusFilter.some(status => {
+      switch (status) {
+        case 'featured':
+          return item.data.featured;
+        case 'official':
+          return item.data.official;
+        case 'new':
+          return item.data.new;
+        default:
+          return false;
+      }
+    });
+  });
+}
+
+// Apply rating filter
+if (ratingFilter) {
+  const selectedRating = parseInt(ratingFilter);
+  filteredItems = filteredItems.filter(item => {
+    const rating = item.data.rating || 0;
+    return rating >= selectedRating;
+  });
+}
+
+// Convert items to a format safe for client-side JavaScript
+const serializedItems = allDirectoryItems.map(item => ({
+  ...item.data,
+  id: item.id
+}));
+
+// Prepare items for rendering
+const renderedItems = await Promise.all(
+  filteredItems.map(async (item) => {
+    const rendered = await render(item);
+    return {
+      ...item.data,
+      id: item.id,
+      rendered
+    };
+  })
+);
 ---
 
 <MainLayout title="Explore Directory Listings">
@@ -22,14 +82,19 @@ const allDirectoryItems = await getCollection('directory');
 
   <div class="flex flex-col md:flex-row gap-8 mt-8">
     <div class="md:w-1/4">
-      <FiltersSidebar />
+      <FiltersSidebar
+        client:load
+        tags={[...tagsMap.entries()].sort((a, b) => b[1] - a[1])}
+        initialRating={ratingFilter}
+        initialStatus={statusFilter}
+      />
     </div>
     
     <div class="md:w-3/4">
       <div class="bg-white border border-gray-200 rounded-lg p-6 mb-6">
         <div class="flex items-center justify-between mb-4">
           <div class="text-gray-500 text-sm">
-            Showing <span class="font-medium">{allDirectoryItems.length}</span> results
+            Showing <span class="font-medium">{filteredItems.length}</span> results
           </div>
           <div class="flex items-center space-x-2">
             <span class="text-sm text-gray-500">Sort by:</span>
@@ -43,20 +108,24 @@ const allDirectoryItems = await getCollection('directory');
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {allDirectoryItems.map(item => (
-            <DirectoryCard
-              title={item.data.title}
-              description={item.data.description}
-              logo={item.data.logo}
-              author={item.data.author}
-              tags={item.data.tags}
-              slug={item.slug}
-              featured={item.data.featured}
-              official={item.data.official}
-              new={item.data.new}
-              advertisement={item.data.advertisement}
-            />
-          ))}
+          {filteredItems.map(item => {
+            const id = item.id.replace(/\.md$/, '');
+            return (
+              <DirectoryCard
+                title={item.data.title}
+                description={item.data.description}
+                logo={item.data.logo}
+                author={item.data.author}
+                tags={item.data.tags}
+                id={id}
+                featured={item.data.featured}
+                official={item.data.official}
+                new={item.data.new}
+                advertisement={item.data.advertisement}
+                rating={item.data.rating}
+              />
+            );
+          })}
         </div>
         
         <div class="mt-8 flex justify-center">

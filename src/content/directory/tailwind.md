@@ -8,4 +8,5 @@ tags: ["css", "framework", "design", "frontend"]
 featured: true
 official: true
 url: "https://tailwindcss.com"
+rating: 4
 ---

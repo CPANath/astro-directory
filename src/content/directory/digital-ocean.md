@@ -9,4 +9,5 @@ featured: true
 official: true
 advertisement: true
 url: "https://digitalocean.com"
+rating: 3
 ---

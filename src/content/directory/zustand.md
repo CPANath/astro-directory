@@ -9,4 +9,5 @@ featured: false
 official: false
 new: true
 url: "https://zustand-demo.pmnd.rs"
+rating: 4
 ---

@@ -9,4 +9,5 @@ featured: true
 official: false
 new: true
 url: "https://ui.shadcn.com"
+rating: 4
 ---

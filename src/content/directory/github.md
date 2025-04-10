@@ -8,4 +8,5 @@ tags: ["development", "git", "collaboration", "open-source"]
 featured: true
 official: true
 url: "https://github.com"
+rating: 5
 ---

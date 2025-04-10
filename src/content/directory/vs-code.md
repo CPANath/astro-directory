@@ -8,4 +8,5 @@ tags: ["editor", "development", "tools", "Microsoft"]
 featured: true
 official: true
 url: "https://code.visualstudio.com"
+rating: 4
 ---
