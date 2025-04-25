@@ -1,14 +1,50 @@
 import { useState, useEffect } from 'react';
 
 interface Props {
-  tags: Array<[string, number]>;
-  initialRating: string | null;
+  initialItems: any[];
   initialStatus: string[];
+  initialRating: string | null;
+  onFilterChange: (items: any[]) => void;
 }
 
-export default function FiltersSidebar({ tags, initialRating, initialStatus }: Props) {
-  const [currentRating, setCurrentRating] = useState<string | null>(initialRating);
-  const [currentStatus, setCurrentStatus] = useState<string[]>(initialStatus);
+export default function DirectoryFilter({ 
+  initialItems, 
+  initialStatus, 
+  initialRating,
+  onFilterChange 
+}: Props) {
+  const [items] = useState(initialItems);
+  const [currentStatus, setCurrentStatus] = useState(initialStatus);
+  const [currentRating, setCurrentRating] = useState(initialRating);
+
+  const filterItems = (statusFilter: string[] = [], ratingFilter: string | null = null) => {
+    return items.filter(entry => {
+      // Apply status filters if any are selected
+      if (statusFilter.length > 0) {
+        const matchesStatus = statusFilter.some(status => {
+          switch (status) {
+            case 'featured':
+              return entry.data.featured === true;
+            case 'official':
+              return entry.data.official === true;
+            case 'new':
+              return entry.data.new === true;
+            default:
+              return false;
+          }
+        });
+        if (!matchesStatus) return false;
+      }
+
+      // Apply rating filter if selected
+      if (ratingFilter) {
+        const minRating = parseInt(ratingFilter);
+        if ((entry.data.rating || 0) < minRating) return false;
+      }
+
+      return true;
+    });
+  };
 
   const updateURL = (params: Record<string, string | string[]>) => {
     const url = new URL(window.location.href);
@@ -21,38 +57,30 @@ export default function FiltersSidebar({ tags, initialRating, initialStatus }: P
       }
     });
     window.history.pushState({}, '', url);
-    window.location.href = url.toString();
+  };
+
+  const handleStatusChange = (newStatus: string[]) => {
+    setCurrentStatus(newStatus);
+    const filtered = filterItems(newStatus, currentRating);
+    onFilterChange(filtered);
+    updateURL({ status: newStatus });
+  };
+
+  const handleRatingChange = (newRating: string | null) => {
+    setCurrentRating(newRating);
+    const filtered = filterItems(currentStatus, newRating);
+    onFilterChange(filtered);
+    if (newRating) {
+      updateURL({ rating: newRating });
+    } else {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('rating');
+      window.history.pushState({}, '', url);
+    }
   };
 
   return (
-    <div id="filters-form" className="bg-white border border-gray-200 rounded-lg p-6 sticky top-6 animate-fade-up shadow-sm hover:shadow-md transition-shadow duration-300">
-      <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5CEBA1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-        </svg>
-        Filters
-      </h2>
-      
-      <div className="mb-6">
-        <h3 className="font-medium text-gray-900 mb-3">Categories</h3>
-        <div className="space-y-2">
-          {tags.slice(0, 10).map(([tag, count]) => (
-            <div key={tag} className="flex items-center justify-between">
-              <a href={`/category/${tag}`} className="text-gray-600 hover:text-[#5CEBA1] flex items-center group transition-all duration-300 hover:translate-x-1">
-                <span className="w-1 h-1 rounded-full bg-[#5CEBA1]/0 group-hover:bg-[#5CEBA1]/50 mr-2 transition-all duration-300"></span>
-                <span className="text-sm">{tag}</span>
-              </a>
-              <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full group-hover:bg-[#5CEBA1]/5 group-hover:text-[#5CEBA1] transition-colors duration-300">{count}</span>
-            </div>
-          ))}
-          {tags.length > 10 && (
-            <a href="/categories" className="text-[#5CEBA1] text-sm hover:underline mt-2 inline-block">
-              View all categories
-            </a>
-          )}
-        </div>
-      </div>
-      
+    <div>
       <div className="mb-6">
         <h3 className="font-medium text-gray-900 mb-3">Status</h3>
         <div className="space-y-2">
@@ -67,8 +95,7 @@ export default function FiltersSidebar({ tags, initialRating, initialStatus }: P
                   const newStatus = e.target.checked
                     ? [...currentStatus, status]
                     : currentStatus.filter(s => s !== status);
-                  setCurrentStatus(newStatus);
-                  updateURL({ status: newStatus });
+                  handleStatusChange(newStatus);
                 }}
                 className="rounded text-[#5CEBA1] focus:ring-[#5CEBA1] transition-all duration-300 cursor-pointer"
               />
@@ -100,8 +127,7 @@ export default function FiltersSidebar({ tags, initialRating, initialStatus }: P
                   checked={isSelected}
                   onChange={() => {
                     const newRating = rating.toString();
-                    setCurrentRating(newRating);
-                    updateURL({ rating: newRating });
+                    handleRatingChange(newRating);
                   }}
                   className="sr-only"
                 />
